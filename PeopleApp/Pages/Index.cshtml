@@ -1,0 +1,42 @@
+﻿@page "{number?}"
+
+@addTagHelper *, Codehaks.Pagination
+@model Demo.Pages.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+@{
+    ViewData["Title"] = "Index";
+    var itemNumber = (Model.PageNumber - 1) * Model.PageSize + 1;
+}
+
+<h1>User List</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Age</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.UserList)
+        {
+            <tr>
+                <th>@itemNumber</th>
+                <th>@user.Givenname @user.Maidenname</th>
+                <th>@user.Age</th>
+            </tr>
+            itemNumber++;
+        }
+    </tbody>
+</table>
+
+<Pagination page-count="@Model.TotalPages" page-target="/users/index" page-number="@Model.PageNumber" page-range="10"></Pagination>
+
+
