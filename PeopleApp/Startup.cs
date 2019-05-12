@@ -18,7 +18,7 @@ namespace PeopleApp
         {
             services.AddMvc();
             services.AddDbContext<PeopleDbContext>(options =>
-                options.UseSqlite("Data Source=People.db"));
+                options.UseSqlite("Data Source=People.sqlite"));
         }
 
        
