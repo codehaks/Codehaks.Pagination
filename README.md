@@ -1,5 +1,6 @@
 # Codehaks.Pagination
 
+![alt text](https://github.com/codehaks/Codehaks.Pagination/blob/master/pagination.JPG "codehaks.pagination")
 
 ## Setup
 Use nuget to download and install package :
