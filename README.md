@@ -35,3 +35,10 @@ on your view (razor page or MVC) add <Pagination> tag:
  *page-target* is the path to send/get next page.
  
  *page-range* is the range of pagination buttons to be generated. 
+ *page-first* to rename the title of "First" button to other languages like "اول"
+ *page-last* to rename the title of "Last" button to other languages like "آخر"
+ 
+ ### Bugs & Issues
+ please report any bugs or issues you encounter. 
+ 
+ 
