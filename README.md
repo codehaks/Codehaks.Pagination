@@ -31,5 +31,7 @@ on your view (razor page or MVC) add <Pagination> tag:
   ~~~
   
  *page-count* is the number of pages in your list which should be provided from your server-side code.
- *page-target* is the path to send/get next page
+ 
+ *page-target* is the path to send/get next page.
+ 
  *page-range* is the range of pagination buttons to be generated. 
