@@ -22,3 +22,13 @@ also you need to reference Codehaks.TagHelpers in you view or _viewImports.cshtm
 
 you can download sample project to see it in action:
 [Demo project](https://github.com/codehaks/Codehaks.Pagination/tree/master/PeopleApp)
+
+### Usage
+on your view (razor page or MVC) add <Pagination> tag:
+  ~~~html
+  <Pagination page-count="@Model.TotalPages" page-target="/index" page-number="@Model.PageNumber" page-range="10"></Pagination>
+  ~~~
+  
+ *page-count* is the number of pages in your list which should be provided from your server-side code.
+ *page-target* is the path to send/get next page
+ *page-range* is the range of pagination buttons to be generated. 
