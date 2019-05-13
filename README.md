@@ -12,8 +12,8 @@ This is a very simple easy to use pagination Tag Helper for ASP.NET Core.
 
 ### Requirements :
 
-*.ASP.NET Core 1.0,1.1,2.0,2.1,2.2 or higher
-*.Bootstrap 4.0 
+* ASP.NET Core 1.0,1.1,2.0,2.1,2.2 or higher
+* Bootstrap 4.0 
 
 ### Instalation
 install using nuget :
@@ -35,11 +35,11 @@ on your view (razor page or MVC) add <Pagination> tag:
   <Pagination page-count="@Model.TotalPages" page-target="/index" page-number="@Model.PageNumber" page-range="10"></Pagination>
   ~~~
   
- *.page-count* is the number of pages in your list which should be provided from your server-side code.
- *.page-target* is the path to send/get next page.
- *.page-range* is the range of pagination buttons to be generated. 
- *.page-first* to rename the title of "First" button to other languages like "اول"
- *.page-last* to rename the title of "Last" button to other languages like "آخر"
+ * **page-count** is the number of pages in your list which should be provided from your server-side code.
+ * **page-target** is the path to send/get next page.
+ * **page-range** is the range of pagination buttons to be generated. 
+ * **page-first** to rename the title of "First" button to other languages like "اول"
+ * **page-last** to rename the title of "Last" button to other languages like "آخر"
  
  ### Bugs & Issues
  please report any bugs or issues you encounter. 
