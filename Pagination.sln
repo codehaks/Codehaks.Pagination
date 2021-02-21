@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codehaks.Pagination", "Codehaks.Pagination\Codehaks.Pagination.csproj", "{6476F9B9-B72D-4AA2-9E33-DF54744A7B0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codehaks.Pagination", "Codehaks.Pagination\Codehaks.Pagination.csproj", "{6476F9B9-B72D-4AA2-9E33-DF54744A7B0E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo", "PeopleApp\Demo.csproj", "{BC048DEF-B8D3-4A64-AF53-00A364B3316B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeopleApp", "..\..\Archive\2021\02\Repos1\PeopleApp\PeopleApp\PeopleApp.csproj", "{4BF3383E-91DB-4FE0-B200-76EDEE1032B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{BC048DEF-B8D3-4A64-AF53-00A364B3316B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC048DEF-B8D3-4A64-AF53-00A364B3316B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC048DEF-B8D3-4A64-AF53-00A364B3316B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BF3383E-91DB-4FE0-B200-76EDEE1032B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BF3383E-91DB-4FE0-B200-76EDEE1032B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BF3383E-91DB-4FE0-B200-76EDEE1032B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BF3383E-91DB-4FE0-B200-76EDEE1032B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
