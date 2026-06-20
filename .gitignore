@@ -338,3 +338,10 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+# Sample throwaway SQLite database (recreated and seeded on startup)
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+# Packed NuGet output
+artifacts/
