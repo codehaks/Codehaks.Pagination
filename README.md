@@ -64,9 +64,12 @@ Both throw `ArgumentOutOfRangeException` for a page number below 1 or a non-posi
 | `page-size`    | int    | Items per page (used for defaulting).                                   | 10      |
 | `page-first`   | string | Label for the first-page link (e.g. localize to `اول`).                 | `First` |
 | `page-last`    | string | Label for the last-page link (e.g. localize to `آخر`).                  | `Last`  |
+| `page-previous`| string | Label for the previous-page link (e.g. localize to `قبلی`).             | `Previous` |
+| `page-next`    | string | Label for the next-page link (e.g. localize to `بعدی`).                 | `Next`  |
 
-It renders a `<nav><ul class="pagination">…</ul></nav>` with a `First` link, a window of
-numbered page links (the current one marked `active`), and a `Last` link.
+It renders a `<nav><ul class="pagination">…</ul></nav>` with `First` and `Previous` links, a
+window of numbered page links (the current one marked `active`), then `Next` and `Last` links.
+`First`/`Previous` are rendered `disabled` on the first page and `Next`/`Last` on the last page.
 
 ## Sample project
 
