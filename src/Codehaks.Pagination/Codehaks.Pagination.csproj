@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <!-- NuGet package metadata -->
+    <PackageId>Codehaks.Pagination</PackageId>
+    <Version>2.0.0</Version>
+    <Authors>Hakim Ghods</Authors>
+    <Description>A Bootstrap pagination Tag Helper and paging helpers for ASP.NET Core.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Codehaks/Pagination</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Codehaks/Pagination</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>aspnetcore;pagination;taghelper;bootstrap;razor</PackageTags>
+    <PackageReleaseNotes>Retargeted to .NET 10. Fixed malformed pagination markup and added paging helpers.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>
