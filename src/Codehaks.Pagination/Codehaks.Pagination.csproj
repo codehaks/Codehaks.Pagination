@@ -15,7 +15,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>aspnetcore;pagination;taghelper;bootstrap;razor</PackageTags>
-    <PackageReleaseNotes>Retargeted to .NET 10. Fixed malformed pagination markup and added paging helpers.</PackageReleaseNotes>
+    <PackageReleaseNotes>Retargeted to .NET 10 (breaking). Fixed malformed pagination markup; added IQueryable paging helpers (Page, ToPagedResult); added Previous/Next links with disabled edge states; added aria-current on the active page and a consistent page-link window.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
