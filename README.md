@@ -1,13 +1,24 @@
 # Codehaks.Pagination
 
-A Bootstrap-styled pagination **Tag Helper** and lightweight paging helpers for ASP.NET Core.
+A Bootstrap-styled pagination **Tag Helper** and lightweight `IQueryable<T>` paging helpers
+for ASP.NET Core.
 
 ![Pagination control](pagination.JPG)
+
+## What you get
+
+- **`Page(...)`** — adds `Skip`/`Take` to any `IQueryable<T>`, staying composable (works with
+  `ToListAsync()` for async EF Core).
+- **`ToPagedResult(...)`** — one synchronous call that returns the page's items plus
+  `TotalCount` / `TotalPages` / `HasNextPage` / `HasPreviousPage`.
+- **`<pagination>` Tag Helper** — renders a Bootstrap `<nav><ul class="pagination">…</ul></nav>`
+  with First/Previous, a sliding window of numbered links (active one marked with
+  `aria-current="page"`), and Next/Last, with `disabled` edges.
 
 ## Requirements
 
 - .NET 10 / ASP.NET Core
-- Bootstrap 4+ (for the `pagination` / `page-item` / `page-link` styles)
+- Bootstrap 4+ CSS loaded on the page (the library emits the classes but ships no CSS)
 
 ## Install
 
@@ -15,69 +26,66 @@ A Bootstrap-styled pagination **Tag Helper** and lightweight paging helpers for 
 dotnet add package Codehaks.Pagination
 ```
 
-Then register the tag helper in `_ViewImports.cshtml`:
+Register the Tag Helper in `_ViewImports.cshtml`:
 
 ```cshtml
 @addTagHelper *, Codehaks.Pagination
 ```
 
-## Usage
+## Quick start
 
-### 1. Page your data (server side)
-
-The library adds two `IQueryable<T>` helpers:
+**Page your data** (Razor Pages, async EF Core):
 
 ```csharp
 using Codehaks.Pagination;
 
-// Compose into an existing query (EF Core materializes it):
-var users = await db.Users
-    .OrderBy(u => u.Id)
-    .Page(pageNumber, pageSize)   // Skip/Take
-    .ToListAsync(ct);
+public async Task OnGetAsync(int number = 1, CancellationToken ct = default)
+{
+    if (number < 1) number = 1;
 
-// Or get a page plus metadata in one call:
-PagedResult<User> page = db.Users.OrderBy(u => u.Id).ToPagedResult(pageNumber, pageSize);
-// page.Items, page.TotalCount, page.TotalPages, page.HasNextPage, page.HasPreviousPage
+    var total = await _db.Users.CountAsync(ct);
+    Users = await _db.Users
+        .OrderBy(u => u.Id)            // always order before paging
+        .Page(number, PageSize)
+        .ToListAsync(ct);
+
+    PageNumber = number;
+    TotalPages = (total + PageSize - 1) / PageSize;
+}
 ```
 
-Both throw `ArgumentOutOfRangeException` for a page number below 1 or a non-positive page size.
-
-### 2. Render the control (Razor view)
+**Render the control** (links are path-style, so add a route segment):
 
 ```cshtml
+@page "{number?}"
+
 <pagination page-count="@Model.TotalPages"
-            page-target="/index"
             page-number="@Model.PageNumber"
-            page-range="5">
-</pagination>
+            page-target="/users"
+            page-range="5" />
 ```
 
-### Tag Helper attributes
+That produces `/users/1`, `/users/2`, … links. Prefer one call? Use
+`ToPagedResult(...)` (synchronous) instead — see the docs.
 
-| Attribute      | Type   | Description                                                             | Default |
-|----------------|--------|-------------------------------------------------------------------------|---------|
-| `page-count`   | int    | Total number of pages (from your server-side code).                     | —       |
-| `page-number`  | int    | The current (1-based) page.                                             | —       |
-| `page-target`  | string | URL base each page link points at, e.g. `/index` → `/index/3`.          | —       |
-| `page-range`   | int    | How many page links to show around the current page.                    | 5       |
-| `page-size`    | int    | Items per page (used for defaulting).                                   | 10      |
-| `page-first`   | string | Label for the first-page link (e.g. localize to `اول`).                 | `First` |
-| `page-last`    | string | Label for the last-page link (e.g. localize to `آخر`).                  | `Last`  |
-| `page-previous`| string | Label for the previous-page link (e.g. localize to `قبلی`).             | `Previous` |
-| `page-next`    | string | Label for the next-page link (e.g. localize to `بعدی`).                 | `Next`  |
+## Documentation
 
-It renders a `<nav><ul class="pagination">…</ul></nav>` with `First` and `Previous` links, a
-window of numbered page links (the current one marked `active` and carrying `aria-current="page"`),
-then `Next` and `Last` links. The window holds a consistent number of links (`2 × page-range`,
-clamped to `page-count`) regardless of the current page. `First`/`Previous` are rendered
-`disabled` on the first page and `Next`/`Last` on the last page.
+Full guides with examples for every use case live in [`docs/`](docs/README.md):
+
+| Guide | What it covers |
+|-------|----------------|
+| [Getting started](docs/getting-started.md) | Install → page data → render, end to end. |
+| [Paging helpers](docs/paging-helpers.md) | `Page`, `ToPagedResult`, `PagedResult<T>`, sync vs. async, validation. |
+| [Tag Helper reference](docs/tag-helper.md) | Every attribute, the exact markup, routing, accessibility. |
+| [Examples by use case](docs/examples.md) | Razor Pages, MVC, in-memory lists, projections, preserving filters. |
+| [Localization & custom labels](docs/localization.md) | Custom labels, RTL, non-Latin text encoding. |
+| [Troubleshooting](docs/troubleshooting.md) | 404s on links, unstyled control, encoding, and more. |
 
 ## Sample project
 
 A runnable Razor Pages sample lives in
 [`src/Codehaks.Pagination.Sample`](src/Codehaks.Pagination.Sample). It uses a throwaway SQLite
-database that is created and seeded on first run, so you can just:
+database created and seeded on first run, so you can just:
 
 ```sh
 dotnet run --project src/Codehaks.Pagination.Sample
@@ -92,8 +100,7 @@ dotnet test
 
 ## Bugs & issues
 
-Please report any bugs or issues on the
-[issue tracker](https://github.com/Codehaks/Pagination/issues).
+Please report bugs on the [issue tracker](https://github.com/Codehaks/Pagination/issues).
 
 ## License
 
