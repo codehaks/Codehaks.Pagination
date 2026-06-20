@@ -6,17 +6,17 @@
 
   <ItemGroup>
     <!-- Sample: EF Core + SQLite (sample-only deviation from R11; see CLAUDE.md) -->
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.9" />
 
     <!-- Testing -->
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
-    <PackageVersion Include="xunit" Version="2.9.2" />
-    <PackageVersion Include="xunit.runner.visualstudio" Version="2.8.2" />
-    <PackageVersion Include="coverlet.collector" Version="6.0.2" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.6.0" />
+    <PackageVersion Include="xunit" Version="2.9.3" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
+    <PackageVersion Include="coverlet.collector" Version="10.0.1" />
 
     <!-- Analyzers (PrivateAssets set in Directory.Build.props) -->
-    <PackageVersion Include="Roslynator.Analyzers" Version="4.12.9" />
-    <PackageVersion Include="Meziantou.Analyzer" Version="2.0.188" />
+    <PackageVersion Include="Roslynator.Analyzers" Version="4.15.0" />
+    <PackageVersion Include="Meziantou.Analyzer" Version="3.0.105" />
   </ItemGroup>
 
 </Project>
