@@ -30,6 +30,12 @@ public class PaginationTagHelper : TagHelper
     /// <summary>Label for the link to the last page. Defaults to "Last".</summary>
     public string? PageLast { get; set; }
 
+    /// <summary>Label for the link to the previous page. Defaults to "Previous".</summary>
+    public string? PagePrevious { get; set; }
+
+    /// <summary>Label for the link to the next page. Defaults to "Next".</summary>
+    public string? PageNext { get; set; }
+
     /// <summary>The URL base that each page link points at, e.g. <c>/index</c>.</summary>
     public string? PageTarget { get; set; }
 
@@ -47,7 +53,8 @@ public class PaginationTagHelper : TagHelper
         var list = new TagBuilder("ul");
         list.AddCssClass("pagination");
 
-        list.InnerHtml.AppendHtml(BuildPageItem(1, PageFirst!));
+        list.InnerHtml.AppendHtml(BuildPageItem(1, PageFirst!, isDisabled: PageNumber <= 1));
+        list.InnerHtml.AppendHtml(BuildPageItem(PageNumber - 1, PagePrevious!, isDisabled: PageNumber <= 1));
 
         var (start, end) = ComputeWindow();
         for (var page = start; page <= end; page++)
@@ -55,7 +62,8 @@ public class PaginationTagHelper : TagHelper
             list.InnerHtml.AppendHtml(BuildPageItem(page, page.ToString(CultureInfo.InvariantCulture), isActive: page == PageNumber));
         }
 
-        list.InnerHtml.AppendHtml(BuildPageItem(PageCount, PageLast!));
+        list.InnerHtml.AppendHtml(BuildPageItem(PageNumber + 1, PageNext!, isDisabled: PageNumber >= PageCount));
+        list.InnerHtml.AppendHtml(BuildPageItem(PageCount, PageLast!, isDisabled: PageNumber >= PageCount));
 
         output.Content.SetHtmlContent(list);
     }
@@ -84,7 +92,7 @@ public class PaginationTagHelper : TagHelper
         return (Math.Max(start, 1), Math.Min(end, PageCount));
     }
 
-    private TagBuilder BuildPageItem(int page, string text, bool isActive = false)
+    private TagBuilder BuildPageItem(int page, string text, bool isActive = false, bool isDisabled = false)
     {
         var item = new TagBuilder("li");
         item.AddCssClass("page-item");
@@ -93,9 +101,25 @@ public class PaginationTagHelper : TagHelper
             item.AddCssClass("active");
         }
 
+        if (isDisabled)
+        {
+            item.AddCssClass("disabled");
+        }
+
         var link = new TagBuilder("a");
         link.AddCssClass("page-link");
-        link.Attributes["href"] = FormattableString.Invariant($"{PageTarget}/{page}");
+        if (isDisabled)
+        {
+            // No navigation target on a disabled control; keep it focusable-inert.
+            link.Attributes["href"] = "#";
+            link.Attributes["tabindex"] = "-1";
+            link.Attributes["aria-disabled"] = "true";
+        }
+        else
+        {
+            link.Attributes["href"] = FormattableString.Invariant($"{PageTarget}/{page}");
+        }
+
         link.InnerHtml.Append(text);
 
         item.InnerHtml.AppendHtml(link);
@@ -127,6 +151,16 @@ public class PaginationTagHelper : TagHelper
         if (string.IsNullOrEmpty(PageLast))
         {
             PageLast = "Last";
+        }
+
+        if (string.IsNullOrEmpty(PagePrevious))
+        {
+            PagePrevious = "Previous";
+        }
+
+        if (string.IsNullOrEmpty(PageNext))
+        {
+            PageNext = "Next";
         }
     }
 }
