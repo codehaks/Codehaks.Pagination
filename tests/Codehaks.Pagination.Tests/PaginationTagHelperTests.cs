@@ -127,6 +127,60 @@ public class PaginationTagHelperTests
     }
 
     [Fact]
+    public void Marks_the_current_page_with_aria_current()
+    {
+        var html = Render(Build(pageNumber: 3, pageCount: 10));
+
+        // The active page link must carry aria-current="page" for screen readers.
+        Assert.Contains("aria-current=\"page\"", html, System.StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Non_active_pages_do_not_carry_aria_current()
+    {
+        var html = Render(Build(pageNumber: 3, pageCount: 10));
+
+        // Exactly one aria-current marker — only the active page has it.
+        var occurrences = html.Split("aria-current=\"page\"").Length - 1;
+        Assert.Equal(1, occurrences);
+    }
+
+    [Theory]
+    [InlineData(1)]
+    [InlineData(5)]
+    [InlineData(50)]
+    [InlineData(95)]
+    [InlineData(100)]
+    public void Shows_a_consistent_number_of_numbered_links(int pageNumber)
+    {
+        // PageRange 5 → the window should always be 2*PageRange = 10 numbered links
+        // for a large page count, no matter which page is current.
+        var html = Render(Build(pageNumber, pageCount: 100));
+
+        var numbered = CountNumberedLinks(html);
+        Assert.Equal(10, numbered);
+    }
+
+    // Counts the numbered page links (the window), excluding First/Previous/Next/Last,
+    // by counting <li> elements whose only role is a numeric label.
+    private static int CountNumberedLinks(string html)
+    {
+        var count = 0;
+        for (var n = 1; n <= 100; n++)
+        {
+            var marker = ">" + n.ToString(System.Globalization.CultureInfo.InvariantCulture) + "</a>";
+            var idx = 0;
+            while ((idx = html.IndexOf(marker, idx, System.StringComparison.Ordinal)) >= 0)
+            {
+                count++;
+                idx += marker.Length;
+            }
+        }
+
+        return count;
+    }
+
+    [Fact]
     public void Custom_previous_and_next_labels_are_used()
     {
         var helper = Build(pageNumber: 5, pageCount: 10);
