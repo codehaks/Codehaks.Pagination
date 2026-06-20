@@ -68,8 +68,10 @@ Both throw `ArgumentOutOfRangeException` for a page number below 1 or a non-posi
 | `page-next`    | string | Label for the next-page link (e.g. localize to `بعدی`).                 | `Next`  |
 
 It renders a `<nav><ul class="pagination">…</ul></nav>` with `First` and `Previous` links, a
-window of numbered page links (the current one marked `active`), then `Next` and `Last` links.
-`First`/`Previous` are rendered `disabled` on the first page and `Next`/`Last` on the last page.
+window of numbered page links (the current one marked `active` and carrying `aria-current="page"`),
+then `Next` and `Last` links. The window holds a consistent number of links (`2 × page-range`,
+clamped to `page-count`) regardless of the current page. `First`/`Previous` are rendered
+`disabled` on the first page and `Next`/`Last` on the last page.
 
 ## Sample project
 

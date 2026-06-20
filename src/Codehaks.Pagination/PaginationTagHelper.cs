@@ -84,7 +84,9 @@ public class PaginationTagHelper : TagHelper
         }
         else
         {
-            start = PageCount - (2 * PageRange);
+            // +1 so the trailing window holds the same 2*PageRange links as every
+            // other position (without it the last pages showed one extra link).
+            start = PageCount - (2 * PageRange) + 1;
             end = PageCount;
         }
 
@@ -108,6 +110,12 @@ public class PaginationTagHelper : TagHelper
 
         var link = new TagBuilder("a");
         link.AddCssClass("page-link");
+        if (isActive)
+        {
+            // Tells assistive tech which page is current; pairs with the "active" class.
+            link.Attributes["aria-current"] = "page";
+        }
+
         if (isDisabled)
         {
             // No navigation target on a disabled control; keep it focusable-inert.
